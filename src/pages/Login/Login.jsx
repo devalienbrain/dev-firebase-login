@@ -1,5 +1,21 @@
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { Link } from "react-router-dom";
+import auth from "../../firebase/firebase.config";
+
 const Login = () => {
-  const handleLogin = () => {};
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log(res.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col">
@@ -27,6 +43,10 @@ const Login = () => {
               <button className="btn btn-danger">Login</button>
             </div>
           </form>
+          <p className="text-red-600 text-center text-xs mb-5">
+            Not register before?{" "}
+            <Link to="/register"> please register first </Link>
+          </p>
         </div>
       </div>
     </div>
